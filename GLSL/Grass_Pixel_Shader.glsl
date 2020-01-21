@@ -42,8 +42,24 @@ void main()
 	TDCheckDiscard();
 
 
-	sampler2D sGrassTexture[4] = sampler2D[4](sGrassTex0,sGrassTex1,sGrassTex2, sGrassTex3);
-	sampler2D sNormalMaps[4] = sampler2D[4](sNormalMap0,sNormalMap1,sNormalMap2, sNormalMap3);
+	//sampler2D sGrassTexture[4] = sampler2D[4](sGrassTex0,sGrassTex1,sGrassTex2, sGrassTex3);
+	//sampler2D sNormalMaps[4] = sampler2D[4](sNormalMap0,sNormalMap1,sNormalMap2, sNormalMap3);
+
+	// sampler2D sGrassTexture[4];
+	// sGrassTexture[0] = sGrassTex0;
+	// sGrassTexture[1] = sGrassTex1;
+	// sGrassTexture[2] = sGrassTex2;
+	// sGrassTexture[3] = sGrassTex3;
+
+	// sampler2D sNormalMaps[4];
+	// sNormalMaps[0] = sNormalMap0;
+	// sNormalMaps[1] = sNormalMap1;
+	// sNormalMaps[2] = sNormalMap2;
+	// sNormalMaps[3] = sNormalMap3;
+
+
+	//sGrassTexture[3] = sGrassTex3;
+
 
 	vec4 outcol = vec4(0.0, 0.0, 0.0, 0.0);
 	vec3 diffuseSum = vec3(0.0, 0.0, 0.0);
@@ -54,9 +70,35 @@ void main()
 	vec2 newUV = iVert.uv;
 	newUV.y *= iVert.randomSize.y;
 	newUV.x *= iVert.randomSize.x;
-	vec4 grassTex = texture(sGrassTexture[iVert.instance % 4], newUV);
 	
-	vec4 normalMap = texture(sNormalMaps[iVert.instance % 4], newUV);
+
+
+	vec4 grassTex;
+	vec4 normalMap;
+	int textureSelection = iVert.instance % 4;
+	switch (textureSelection){
+		case 0:
+			grassTex = texture(sGrassTex0, newUV);
+			normalMap = texture(sNormalMap0, newUV);
+			break;
+		case 1:
+			grassTex = texture(sGrassTex1, newUV);
+			normalMap = texture(sNormalMap1, newUV);
+			break;
+		case 2:
+			grassTex = texture(sGrassTex2, newUV);
+			normalMap = texture(sNormalMap2, newUV);
+			break;
+		case 3:
+			grassTex = texture(sGrassTex3, newUV);
+			normalMap = texture(sNormalMap3, newUV);
+			break;
+		default:
+			grassTex = texture(sGrassTex0, newUV);
+			normalMap = texture(sNormalMap0, newUV);
+			break;	
+	}
+	 
 
 	vec3 worldSpaceNorm = normalize(iVert.worldSpaceNorm.xyz);
 	vec3 norm = (2.0 * (normalMap.xyz - 0.5)).xyz;
