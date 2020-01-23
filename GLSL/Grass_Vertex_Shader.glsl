@@ -14,7 +14,7 @@ uniform ivec2 uRes;
 uniform vec3 uRotationAxis;
 uniform float uRandomStiffness;
 uniform vec4 uCamPosition;
-
+uniform bool uShouldRotateToCamera;
 
 out Vertex
 {
@@ -101,11 +101,14 @@ void main()
 	vec3 newPosition = P;
 	vec3 newNormals = N;
 
-	newPosition = lookAtMatrix * P;
-	newNormals = -lookAtMatrix * N;
+	if (uShouldRotateToCamera == true){
+		newPosition = lookAtMatrix * P;
+		newNormals = -lookAtMatrix * N;
+	}
 
 	newPosition = finalRotationMatrix * newPosition;
 	newNormals = finalRotationMatrix * newNormals;
+
 	// ---- END PERFORM ROTATION
 
 	// REGION --- BUILT IN STUFF
