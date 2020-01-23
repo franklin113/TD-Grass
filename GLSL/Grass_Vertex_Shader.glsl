@@ -103,7 +103,7 @@ void main()
 
 	if (uShouldRotateToCamera == true){
 		newPosition = lookAtMatrix * P;
-		newNormals = -lookAtMatrix * N;
+		newNormals = lookAtMatrix * N;
 	}
 
 	newPosition = finalRotationMatrix * newPosition;

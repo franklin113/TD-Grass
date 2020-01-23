@@ -120,10 +120,10 @@ void main()
 	// When one of those GPUs is detected, an alternative way
 	// of determing front-facing is done using the position
 	// and normal for this pixel.
-	if (!TDFrontFacing(iVert.worldSpacePos.xyz, worldSpaceNorm.xyz))
-	{
-		normal = -normal;
-	}
+	// if (!TDFrontFacing(iVert.worldSpacePos.xyz, worldSpaceNorm.xyz))
+	// {
+	// 	normal = -normal;
+	// }
 
 	// Your shader will be recompiled based on the number
 	// of lights in your scene, so this continues to work
